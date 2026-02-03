@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - run: pip install PyQt6 PyJWT cryptography requests openpyxl pyinstaller
+    - run: pyinstaller --name="内购管理工具" --windowed --onefile --noconfirm main.py
+    - uses: actions/upload-artifact@v4
+      with:
+        name: 内购管理工具-Windows
+        path: dist/内购管理工具.exe
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - run: pip install PyQt6 PyJWT cryptography requests openpyxl pyinstaller
+    - run: pyinstaller --name="内购管理工具" --windowed --onedir --noconfirm main.py
+    - run: cd dist && zip -r 内购管理工具-macOS.zip 内购管理工具.app
+    - uses: actions/upload-artifact@v4
+      with:
+        name: 内购管理工具-macOS
+        path: dist/内购管理工具-macOS.zip
