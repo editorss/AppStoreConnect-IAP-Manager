@@ -14,11 +14,11 @@ jobs:
       with:
         python-version: '3.11'
     - run: pip install PyQt6 PyJWT cryptography requests openpyxl pyinstaller
-    - run: pyinstaller --name="内购管理工具" --windowed --onefile --noconfirm main.py
+    - run: pyinstaller --name="IAP-Manager" --windowed --onefile --noconfirm main.py
     - uses: actions/upload-artifact@v4
       with:
-        name: 内购管理工具-Windows
-        path: dist/内购管理工具.exe
+        name: IAP-Manager-Windows
+        path: dist/IAP-Manager.exe
 
   build-macos:
     runs-on: macos-latest
@@ -28,9 +28,9 @@ jobs:
       with:
         python-version: '3.11'
     - run: pip install PyQt6 PyJWT cryptography requests openpyxl pyinstaller
-    - run: pyinstaller --name="内购管理工具" --windowed --onedir --noconfirm main.py
-    - run: cd dist && zip -r 内购管理工具-macOS.zip 内购管理工具.app
+    - run: pyinstaller --name="IAP-Manager" --windowed --onedir --noconfirm main.py
+    - run: cd dist && zip -r IAP-Manager-macOS.zip IAP-Manager.app
     - uses: actions/upload-artifact@v4
       with:
-        name: 内购管理工具-macOS
-        path: dist/内购管理工具-macOS.zip
+        name: IAP-Manager-macOS
+        path: dist/IAP-Manager-macOS.zip
