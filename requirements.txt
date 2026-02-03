@@ -1,0 +1,18 @@
+# App Store Connect API Tool - Windows
+# Python 3.9+ required
+
+# GUI Framework
+PyQt6>=6.4.0
+
+# JWT Authentication
+PyJWT>=2.8.0
+cryptography>=41.0.0
+
+# HTTP Requests
+requests>=2.31.0
+
+# Excel Parsing
+openpyxl>=3.1.0
+
+# Packaging (for building exe)
+pyinstaller>=6.0.0

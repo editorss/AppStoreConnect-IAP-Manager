@@ -1,0 +1,70 @@
+name: Build Windows EXE
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install PyQt6 PyJWT cryptography requests openpyxl pyinstaller
+    
+    - name: Build EXE
+      run: |
+        pyinstaller --name="内购管理工具" --windowed --onefile --noconfirm --clean main.py
+    
+    - name: Upload EXE artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: 内购管理工具-Windows
+        path: dist/内购管理工具.exe
+        retention-days: 30
+
+  build-macos:
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install PyQt6 PyJWT cryptography requests openpyxl pyinstaller
+    
+    - name: Build macOS App
+      run: |
+        pyinstaller --name="内购管理工具" --windowed --onedir --noconfirm --clean main.py
+    
+    - name: Zip macOS App
+      run: |
+        cd dist
+        zip -r 内购管理工具-macOS.zip 内购管理工具.app
+    
+    - name: Upload macOS artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: 内购管理工具-macOS
+        path: dist/内购管理工具-macOS.zip
+        retention-days: 30

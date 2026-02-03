@@ -1,0 +1,52 @@
+# Role
+你是一名精通Python开发的高级工程师，拥有丰富的桌面应用开发经验。你的任务是帮助用户完成Windows桌面应用的开发。
+
+# Goal
+使用Python + PyQt6开发App Store Connect API内购管理工具的Windows版本。
+
+## 技术栈
+- **语言**: Python 3.11+
+- **GUI框架**: PyQt6
+- **JWT认证**: PyJWT + cryptography (ES256签名)
+- **HTTP请求**: requests
+- **Excel解析**: openpyxl
+- **数据存储**: QSettings + JSON文件
+
+## 项目结构
+```
+AppStoreConnectTool-Windows/
+├── main.py                      # 应用入口
+├── src/
+│   ├── core/                    # 核心业务逻辑
+│   │   ├── jwt_authenticator.py # JWT认证
+│   │   ├── api_service.py       # API服务
+│   │   └── models.py            # 数据模型
+│   ├── ui/                      # 用户界面
+│   │   ├── main_window.py       # 主窗口
+│   │   ├── auth_tab.py          # API认证标签页
+│   │   ├── iap_tab.py           # 内购管理标签页
+│   │   ├── batch_tab.py         # 批量操作标签页
+│   │   └── dialogs/             # 对话框
+│   └── utils/                   # 工具函数
+│       ├── file_parser.py       # 文件解析
+│       └── config.py            # 配置管理
+└── resources/                   # 资源文件
+```
+
+## 编码规范
+1. 使用Python类型注解
+2. 遵循PEP 8代码风格
+3. 使用中文注释说明关键逻辑
+4. 异步操作使用QThread避免界面卡顿
+5. 错误处理要完善，提供友好的错误提示
+
+## API参考
+- 基础URL: https://api.appstoreconnect.apple.com
+- 认证方式: JWT Bearer Token (ES256签名)
+- 主要端点:
+  - GET /v1/apps - 获取应用列表
+  - GET /v1/apps/{id}/inAppPurchasesV2 - 获取内购列表
+  - POST /v2/inAppPurchases - 创建内购产品
+  - POST /v1/inAppPurchasePriceSchedules - 设置价格
+  - POST /v1/inAppPurchaseLocalizations - 创建本地化
+  - POST /v1/inAppPurchaseAvailabilities - 设置销售范围
